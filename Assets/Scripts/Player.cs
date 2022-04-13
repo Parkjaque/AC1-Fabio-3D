@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Text coinText;
     public Image jumpImage;
     public GameObject gameOverScreen;
+    public GameObject winScreen;
     public GameObject mainCamera;
     public Text spawnpointNotification;
 
@@ -89,6 +90,11 @@ public class Player : MonoBehaviour
                 canJump = true;
                 jumpImage.enabled = true;
                 Destroy(other.gameObject);
+                break;
+
+            case "Finish":
+                winScreen.SetActive(true);
+                Time.timeScale = 0;
                 break;
         }
     }

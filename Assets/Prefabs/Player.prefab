@@ -126,10 +126,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  forceJump: 5
+  forceJump: 7
   floorMask:
     serializedVersion: 2
     m_Bits: 8
   coinText: {fileID: 0}
   jumpImage: {fileID: 0}
   gameOverScreen: {fileID: 0}
+  winScreen: {fileID: 0}
+  mainCamera: {fileID: 0}
+  spawnpointNotification: {fileID: 0}
