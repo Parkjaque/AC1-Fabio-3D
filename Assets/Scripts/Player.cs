@@ -12,18 +12,21 @@ public class Player : MonoBehaviour
     public Text coinText;
     public Image jumpImage;
     public GameObject gameOverScreen;
+    public GameObject mainCamera;
 
     bool canJump = false;
-    Vector3 activeSpawnpoint = new Vector3(-1.894f, 1.79f, 0);
+    Vector3 activeSpawnpoint;
     Rigidbody rb;
     float inputHorizontal;
     float inputVertical;
-    Vector3 initialCameraPos;
+    //Vector3 initialCameraPos;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        initialCameraPos = Camera.main.transform.position;
+        //initialCameraPos = mainCamera.transform.position - transform.position;
+        activeSpawnpoint = transform.position;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -39,11 +42,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 direction = Camera.main.transform.forward * inputVertical + Camera.main.transform.right * inputHorizontal;
+        Vector3 direction = mainCamera.transform.forward * inputVertical + mainCamera.transform.right * inputHorizontal;
         rb.AddForce(direction * speed);
 
         //Camera seguir o jogador
-        Camera.main.transform.position = new Vector3(transform.position.x + initialCameraPos.x, transform.position.y + initialCameraPos.y, transform.position.z + initialCameraPos.z);
+        //mainCamera.transform.position = new Vector3(transform.position.x + initialCameraPos.x, transform.position.y + initialCameraPos.y, transform.position.z + initialCameraPos.z);
     }
 
     public void Respawn()
@@ -53,6 +56,7 @@ public class Player : MonoBehaviour
         transform.position = activeSpawnpoint;
         rb.isKinematic = false;
         gameOverScreen.SetActive(false);
+        Cursor.visible = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -62,6 +66,7 @@ public class Player : MonoBehaviour
             case "GameOverTrigger":
                 rb.isKinematic = true;
                 gameOverScreen.SetActive(true);
+                Cursor.visible = true;
                 break;
 
             case "Spawnpoint":

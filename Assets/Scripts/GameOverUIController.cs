@@ -7,6 +7,7 @@ public class GameOverUIController : MonoBehaviour
     public Player player;
     public void OnClickRespawn()
     {
+        Debug.Log("Pimba");
         player.Respawn();
     }
 }

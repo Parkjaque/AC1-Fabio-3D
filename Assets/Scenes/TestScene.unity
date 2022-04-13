@@ -1769,6 +1769,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1569110597}
     - target: {fileID: 5195212542614619863, guid: 85a50970fffc5d942bf0d524c2441804, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 51537034}
+    - target: {fileID: 5195212542614619863, guid: 85a50970fffc5d942bf0d524c2441804, type: 3}
       propertyPath: gameOverScreen
       value: 
       objectReference: {fileID: 978113028}
