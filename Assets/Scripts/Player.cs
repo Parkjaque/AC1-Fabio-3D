@@ -12,19 +12,19 @@ public class Player : MonoBehaviour
     public Text coinText;
     public Image jumpImage;
     public GameObject gameOverScreen;
-    public GameObject winScreen;
     public GameObject mainCamera;
-    public Text spawnpointNotification;
 
     bool canJump = false;
     Vector3 activeSpawnpoint;
     Rigidbody rb;
     float inputHorizontal;
     float inputVertical;
+    //Vector3 initialCameraPos;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        //initialCameraPos = mainCamera.transform.position - transform.position;
         activeSpawnpoint = transform.position;
         Cursor.visible = false;
     }
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         inputHorizontal = Input.GetAxis("Horizontal");
         inputVertical = Input.GetAxis("Vertical");
 
-        if (canJump && Input.GetButtonDown("Jump") && Physics.CheckSphere(transform.position + new Vector3(0, -0.501f, 0), .1f, floorMask))
+        if (canJump && Input.GetButtonDown("Jump") && Physics.CheckSphere(transform.position + new Vector3(0, -0.5f, 0), .2f, floorMask))
         {
             rb.AddForce(Vector3.up * forceJump, ForceMode.Impulse);
         }
@@ -44,6 +44,9 @@ public class Player : MonoBehaviour
     {
         Vector3 direction = mainCamera.transform.forward * inputVertical + mainCamera.transform.right * inputHorizontal;
         rb.AddForce(direction * speed);
+
+        //Camera seguir o jogador
+        //mainCamera.transform.position = new Vector3(transform.position.x + initialCameraPos.x, transform.position.y + initialCameraPos.y, transform.position.z + initialCameraPos.z);
     }
 
     public void Respawn()
@@ -54,12 +57,6 @@ public class Player : MonoBehaviour
         rb.isKinematic = false;
         gameOverScreen.SetActive(false);
         Cursor.visible = false;
-    }
-
-    private IEnumerator disableNotification() 
-    {
-        yield return new WaitForSeconds(1.4f);
-        spawnpointNotification.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -74,11 +71,7 @@ public class Player : MonoBehaviour
 
             case "Spawnpoint":
                 activeSpawnpoint = other.transform.position;
-                Spawnpoint spawnpoint = other.GetComponent<Spawnpoint>();
-                spawnpointNotification.enabled = true;
-                spawnpointNotification.text = "Level " + spawnpoint.level;
                 Destroy(other.gameObject);
-                StartCoroutine(disableNotification());
                 break;
 
             case "Coin":
@@ -90,11 +83,6 @@ public class Player : MonoBehaviour
                 canJump = true;
                 jumpImage.enabled = true;
                 Destroy(other.gameObject);
-                break;
-
-            case "Finish":
-                winScreen.SetActive(true);
-                Time.timeScale = 0;
                 break;
         }
     }
