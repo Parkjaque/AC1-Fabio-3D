@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 
     public void btnPlay_click()
     {
-        SceneManager.LoadScene("game");
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void btnSettings_click()
