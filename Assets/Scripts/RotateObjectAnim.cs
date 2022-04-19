@@ -13,6 +13,6 @@ public class RotateObjectAnim : MonoBehaviour
 
     void Update()
     {
-        rt.Rotate(new Vector3(0, .2f, 0));
+        rt.Rotate(new Vector3(0, 1f, 0));
     }
 }
